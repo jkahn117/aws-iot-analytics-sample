@@ -1,0 +1,12 @@
+[DEFAULT]
+; IoT config
+TOPIC_PREFIX=/sensehat/data
+; certificates
+ROOT_CA=certs/root.pem
+CERTIFICATE=certificate.pem.crt
+PRIVATE_KEY=private.pem.key
+; AWS configuration
+ENDPOINT=abcdefghijk.iot.us-east-1.amazonaws.com
+REGION=us-east-1
+; device location
+ZIPCODE=60062

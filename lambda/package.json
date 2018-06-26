@@ -1,0 +1,28 @@
+{
+  "name": "aws-iot-sample",
+  "version": "1.0.0",
+  "description": "AWS IoT Analytics: Sample",
+  "main": "index.js",
+  "scripts": {
+    "lint": "tslint src/*.ts",
+    "build": "webpack"
+  },
+  "author": "jkahn@",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "aws-sdk": "^2.236.1",
+    "axios": "^0.18.0",
+    "moment": "^2.22.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.3",
+    "@types/node": "^10.0.6",
+    "awesome-typescript-loader": "^5.0.0",
+    "json-loader": "^0.5.7",
+    "source-map-loader": "^0.2.3",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.3"
+  }
+}

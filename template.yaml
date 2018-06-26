@@ -1,0 +1,101 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Transform: 'AWS::Serverless-2016-10-31'
+
+Description: AWS IoT Analytics Sample
+
+Resources:
+  AppendWeatherDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda/dist/
+      Handler: index.handler
+      Runtime: nodejs8.10
+      Description: Retrieve current weather and append to IoT message.
+      Role: !GetAtt WeatherFunctionRole.Arn
+      Timeout: 10
+      Environment:
+        Variables:
+          API_KEY_PARAMETER_NAME: openweather-api-key
+          WEATHER_TABLE: aws-iot-weather
+
+  WeatherTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: aws-iot-weather
+      AttributeDefinitions:
+        -
+          AttributeName: zipCode
+          AttributeType: N
+        -
+          AttributeName: cacheTimestamp
+          AttributeType: N
+      KeySchema:
+        -
+          AttributeName: zipCode
+          KeyType: HASH
+        -
+          AttributeName: cacheTimestamp
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  #
+  # ---------- IAM ----------
+  #
+  WeatherFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: "/AWSIoT/"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: AllowLambdaServiceToAssumeRole
+            Effect: Allow
+            Action: 
+              - sts:AssumeRole
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+
+  WeatherFunctionPolicy:
+    Type: AWS::IAM::Policy
+    DependsOn: WeatherFunctionRole
+    Properties:
+      PolicyName: WeatherFunctionPolicy
+      Roles:
+        - !Ref WeatherFunctionRole
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement: 
+          -
+            Effect: Allow
+            Resource: !GetAtt WeatherTable.Arn
+            Action:
+              - "dynamodb:Query"
+              - "dynamodb:PutItem"
+          -
+            Effect: Allow
+            Resource: !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/openweather-api-key"
+            Action:
+              - "ssm:GetParameter"
+
+  #
+  # ---------- Permissions ----------
+  #
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt AppendWeatherDataFunction.Arn
+      Principal: iotanalytics.amazonaws.com
+      SourceAccount: !Sub "${AWS::AccountId}"
+
+Outputs:
+  LambdaFunctionName:
+    Description: Name of Lambda Function
+    Value: !Ref AppendWeatherDataFunction
