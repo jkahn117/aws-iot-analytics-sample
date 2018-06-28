@@ -1,4 +1,4 @@
-# AWS IoT Analytics
+# AWS IoT Analytics Sample
 
 ## Part 1: Deploying AWS Resources
 

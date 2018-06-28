@@ -1,10 +1,18 @@
-# AWS IoT Analytics
+# AWS IoT Analytics Sample
 
 ## Part 2: Configuring AWS IoT Core
 
 Before we setup AWS IoT Analytics, we need to setup our Raspberry Pi as a device in AWS IoT Core.
 
-Begin by opening the AWS IoT Core console. Select "Manage" > "Things" in the menu on the left. Then select "Create" in the upper right corner.
+Begin by opening the AWS IoT Core console. Select "Secure" > "Policies" from the menu on the left. The select the "Create" button in the upper right corner.
+
+We will now create a policy that will set permissions for access to the IoT service. Configure as shown below:
+
+![Create a policy](../images/aws-iot-core-create-policy.png)
+
+Click "Add Statement" and then "Create." Note that this policy is less restrictive than you should use in a real-world environment. AWS recommends following the principle of least privilege, our policy is much broader than that.
+
+Next, we will create a representation of our Rapsberry Pi device by creating a Thing in AWS IoT Core. Select "Manage" > "Things" in the menu on the left. Then select "Create" in the upper right corner.
 
 On the subsequent page, select "Create a single thing".
 
@@ -30,4 +38,4 @@ Finally, select the policy we created earlier and click "Register Thing" at the 
 
 We can now begin to setup our Raspberry Pi device.
 
-[Next: Configuring AWS IoT Core](3_raspberry_pi.md)
+[Next: Setting up your Raspberry Pi](3_raspberry_pi.md)

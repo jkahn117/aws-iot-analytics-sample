@@ -8,7 +8,9 @@ This project requires a [Raspberry Pi 3](https://www.raspberrypi.org/) as well a
 
 To get started, clone this repository locally:
 
+``` bash
 $ git clone https://github.com/jkahn117/aws-iot-analytics-sample.git
+```
 
 The repository contains an AWS CloudFormation template that will launch the needed AWS resources as well as source code for the sample.
 
@@ -27,9 +29,9 @@ Deploying this project is broken down into five sections, each covering an indep
 
 1. [Part 1: Deploying AWS Resources](./docs/1_aws_resources.md)
 2. [Part 2: Configuring AWS IoT Core](./docs/2_iot_core.md)
-3. [Part 3: Setting up your Raspberry Pi](./docs/3_)
-4. [Part 4: Enriching Data with AWS Iot Analytics](./docs/4_)
-5. [Part 5: Visualizing Data with AWS Quicksight](./docs/5_)
+3. [Part 3: Setting up your Raspberry Pi](./docs/3_raspberry_pi.md)
+4. [Part 4: Enriching Data with AWS Iot Analytics](./docs/4_iot_analytics.md)
+5. [Part 5: Visualizing Data with AWS Quicksight](./docs/5_quicksight.md)
 
 At the end of the project, you will have create a live dashboard in AWS Quicksight that displays environmental conditions around the Raspberry Pi relative to the outside:
 
